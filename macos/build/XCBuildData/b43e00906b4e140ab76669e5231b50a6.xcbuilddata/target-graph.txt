@@ -1,0 +1,45 @@
+Target dependency graph (16 targets)
+FMDB in Pods, no dependencies
+FlutterMacOS in Pods, no dependencies
+bonsoir in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+media_kit_libs_macos_video in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+media_kit_native_event_loop in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+media_kit_video in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+package_info_plus in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+path_provider_foundation in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+screen_brightness_macos in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+screen_retriever in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+shared_preferences_foundation in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+sqflite in Pods, depends on:
+FMDB in Pods (explicit)
+FlutterMacOS in Pods (explicit)
+wakelock_plus in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+window_manager in Pods, depends on:
+FlutterMacOS in Pods (explicit)
+Pods-Runner in Pods, depends on:
+FMDB in Pods (explicit)
+FlutterMacOS in Pods (explicit)
+bonsoir in Pods (explicit)
+media_kit_libs_macos_video in Pods (explicit)
+media_kit_native_event_loop in Pods (explicit)
+media_kit_video in Pods (explicit)
+package_info_plus in Pods (explicit)
+path_provider_foundation in Pods (explicit)
+screen_brightness_macos in Pods (explicit)
+screen_retriever in Pods (explicit)
+shared_preferences_foundation in Pods (explicit)
+sqflite in Pods (explicit)
+wakelock_plus in Pods (explicit)
+window_manager in Pods (explicit)
+Pods-RunnerTests in Pods, depends on:
+Pods-Runner in Pods (explicit)

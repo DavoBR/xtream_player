@@ -1,0 +1,15 @@
+{
+  "buildCommand": "flutter/bin/flutter build web --release",
+  "installCommand": "if cd flutter; then git pull && cd .. ; else git clone https://github.com/flutter/flutter.git; fi && ls && flutter/bin/flutter doctor && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web",
+  "outputDirectory": "build/web",
+  "rewrites": [
+    {
+      "source": "/api/stream/:type/:id.:extension",
+      "destination": "http://mundofuturo.co/:type/Clinic12289/252525/:id.:extension"
+    },
+    {
+      "source": "/api/player",
+      "destination": "http://mundofuturo.co/player_api.php?username=Clinic12289&password=252525"
+    }
+  ]
+}
