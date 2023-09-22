@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:xtream_player/models/media_info.dart';
-import 'package:xtream_player/pages/player_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:xtream_player/widgets/sidebar.dart';
 
 import '../models/enums.dart';
@@ -21,10 +20,6 @@ class StreamsPage extends StatelessWidget {
   const StreamsPage(this.streamType, {super.key});
 
   final StreamType streamType;
-
-  static MaterialPageRoute route(StreamType streamType) {
-    return MaterialPageRoute(builder: (_) => StreamsPage(streamType));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,13 +73,7 @@ class StreamsPage extends StatelessWidget {
           imageWidth: 250,
           imageHeight: 250,
           name: live.name!,
-          onTap: () => Navigator.of(context).push(PlayerPage.route([
-            MediaInfo(
-              id: live.streamId!,
-              type: streamType,
-              title: live.name!,
-            )
-          ])),
+          onTap: () => context.go('/${streamType.name}/${live.streamId}'),
         );
       case StreamType.movie:
         final movie = Movie.fromJson(item);
@@ -97,13 +86,7 @@ class StreamsPage extends StatelessWidget {
             context: context,
             builder: (_) => MovieDialog(movie),
           ),
-          onTap: () => Navigator.of(context).push(PlayerPage.route([
-            MediaInfo(
-              id: movie.streamId!,
-              type: streamType,
-              title: movie.name!,
-            )
-          ])),
+          onTap: () => context.go('/${streamType.name}/${movie.streamId}'),
         );
       case StreamType.series:
         final serie = Serie.fromJson(item);

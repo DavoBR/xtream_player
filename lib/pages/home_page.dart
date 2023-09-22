@@ -1,11 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:xtream_player/providers/settings_provider.dart';
 
 import '../models/enums.dart';
-import '../models/settings.dart';
-import 'settings_page.dart';
-import 'streams_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,10 +20,10 @@ class HomePage extends StatelessWidget {
             );
           },
           data: (settings) {
-            if (settings.valid()) {
-              return _Options();
+            if (settings.serverUrl.isEmpty && !kIsWeb) {
+              return _MissingSettings();
             } else {
-              return _MissingSettings(settings);
+              return _Options();
             }
           },
           error: (Object error, StackTrace stackTrace) {
@@ -39,10 +38,6 @@ class HomePage extends StatelessWidget {
 }
 
 class _MissingSettings extends StatelessWidget {
-  const _MissingSettings(this.settings);
-
-  final Settings settings;
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -54,9 +49,7 @@ class _MissingSettings extends StatelessWidget {
             child: Text('No se ha configurado una cuenta'),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(SettingsPage.route(settings));
-            },
+            onPressed: () => context.go('/settings'),
             child: const Text('Configurar'),
           ),
         ],
@@ -115,7 +108,7 @@ class _Card extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-        onTap: () => Navigator.of(context).push(StreamsPage.route(streamType)),
+        onTap: () => context.go('/${streamType.name}'),
         child: Column(children: [
           Icon(icon, size: 200),
           Text(label),

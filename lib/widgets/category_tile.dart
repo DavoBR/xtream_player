@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../models/category.dart';
+import '../models/stream_category.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({super.key, required this.category});
 
-  final Category category;
+  final StreamCategory category;
 
   @override
   Widget build(BuildContext context) {

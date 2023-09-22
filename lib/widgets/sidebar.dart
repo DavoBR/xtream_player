@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:xtream_player/models/enums.dart';
-import 'package:xtream_player/pages/streams_page.dart';
 import 'package:xtream_player/providers/categories_provider.dart';
-import 'package:xtream_player/providers/settings_provider.dart';
 
-import '../models/category.dart';
-import '../pages/settings_page.dart';
+import '../models/stream_category.dart';
 import '../providers/category_provider.dart';
 import '../providers/scope_provider.dart';
 
@@ -41,22 +39,14 @@ class Sidebar extends ConsumerWidget {
           selected: _streamType == StreamType.series,
           onTap: () => goToStreams(context, StreamType.series),
         ),
-        Consumer(builder: (context, ref, child) {
-          final settingsAsync = ref.watch(settingsProvider);
-          return settingsAsync.maybeWhen(
-            data: (settings) {
-              return ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, SettingsPage.route(settings));
-                },
-              );
-            },
-            orElse: () => const SizedBox.shrink(),
-          );
-        }),
+        ListTile(
+          leading: const Icon(Icons.settings),
+          title: const Text('Settings'),
+          onTap: () {
+            Navigator.pop(context);
+            context.push('/settings');
+          },
+        ),
         const Divider(),
         ListTile(
           leading: const Icon(Icons.stream),
@@ -103,7 +93,7 @@ class Sidebar extends ConsumerWidget {
 
   void goToStreams(BuildContext context, StreamType streamType) {
     Navigator.pop(context);
-    Navigator.push(context, StreamsPage.route(streamType));
+    context.go('/${streamType.name}');
   }
 
   void changeScope(BuildContext context, WidgetRef ref, StreamScope scope) {
@@ -111,7 +101,11 @@ class Sidebar extends ConsumerWidget {
     ref.read(scopeProvider(_streamType).notifier).state = scope;
   }
 
-  void changeCategory(BuildContext context, WidgetRef ref, Category? category) {
+  void changeCategory(
+    BuildContext context,
+    WidgetRef ref,
+    StreamCategory? category,
+  ) {
     Navigator.pop(context);
     ref.read(categoryProvider(_streamType).notifier).state = category;
   }

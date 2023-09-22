@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:xtream_player/providers/serie_provider.dart';
 
 import '../models/enums.dart';
 import '../models/episode.dart';
-import '../models/media_info.dart';
 import '../models/season.dart';
 import '../models/serie.dart';
 import '../models/serie_details.dart';
-import '../pages/player_page.dart';
 import 'cover.dart';
 import 'episode_tile.dart';
 
@@ -24,7 +23,7 @@ class SerieDialog extends ConsumerWidget {
       clipBehavior: Clip.hardEdge,
       child: serieAsync.when(
         data: (serieDetails) {
-          return _DataContent(_serie, serieDetails);
+          return _DataContent(serieDetails);
         },
         error: (error, stackTrace) {
           return Column(
@@ -45,26 +44,16 @@ class SerieDialog extends ConsumerWidget {
 }
 
 class _DataContent extends StatelessWidget {
-  _DataContent(this._serie, this._serieDetails) {
-    for (var seasonNum in _serieDetails.episodes.keys) {
-      for (var episode in _serieDetails.episodes[seasonNum]!) {
-        _medias.add(MediaInfo(
-          id: int.parse(episode.id),
-          parentId: _serie.seriesId,
-          type: StreamType.values.byName(_serie.streamType),
-          title: episode.title,
-        ));
-      }
-    }
-  }
+  const _DataContent(this._serieDetails);
 
-  final Serie _serie;
   final SerieDetails _serieDetails;
-  final List<MediaInfo> _medias = [];
 
   List<Season> get _seasons => _serieDetails.seasons
       .where(
-          (s) => _serieDetails.episodes.containsKey(s.seasonNumber.toString()))
+        (s) => _serieDetails.episodes.containsKey(
+          s.seasonNumber.toString(),
+        ),
+      )
       .toList();
 
   @override
@@ -153,14 +142,9 @@ class _DataContent extends StatelessWidget {
   Widget _buildEpisodeTile(BuildContext context, Episode episode) {
     return EpisodeTile(
       episode,
-      onTap: () => _onEpisodeTap(context, episode),
+      onTap: () => context.go(
+        '/${StreamType.series.name}/${episode.id}',
+      ),
     );
-  }
-
-  void _onEpisodeTap(BuildContext context, Episode episode) {
-    final index = _medias.indexWhere(
-      (media) => media.id.toString() == episode.id,
-    );
-    Navigator.of(context).push(PlayerPage.route(_medias, index));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xtream_player/pages/home_page.dart';
+import 'package:xtream_player/router.dart';
 
 import 'app_theme.dart';
 
@@ -9,12 +9,12 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Xtream Player',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      home: HomePage(),
+      routerConfig: router,
     );
   }
 }
