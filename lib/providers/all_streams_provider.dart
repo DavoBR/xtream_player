@@ -21,13 +21,20 @@ final allStreamsProvider =
     default:
       throw Exception('allStreamsProvider: Invalid stream type $streamType');
   }
-  final response = await playerApi.get('', queryParameters: {
-    'action': action,
-  });
-  return List<Map<String, dynamic>>.from(response.data!).where((stream) {
-    final id = stream['stream_type'] == 'series'
-        ? stream['series_id']
-        : stream['stream_id'];
-    return id != null && stream['name'] != null;
-  }).toList();
+  final response = await playerApi.get<List>(
+    '',
+    queryParameters: {
+      'action': action,
+    },
+  );
+
+  bool filter(Map<String, dynamic> stream) {
+    final idKey = stream['stream_type'] == 'series' ? 'series_id' : 'stream_id';
+    return stream[idKey] != null && stream['name'] != null;
+  }
+
+  return response.data!
+      .map((stream) => stream as Map<String, dynamic>)
+      .where(filter)
+      .toList();
 });
