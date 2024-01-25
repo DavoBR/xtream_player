@@ -9,6 +9,10 @@ import '../models/settings.dart';
 class SettingsNotifier extends AsyncNotifier<Settings> {
   final _prefs = SharedPreferences.getInstance();
   final _vault = const FlutterSecureStorage(
+    mOptions: MacOsOptions(
+      accountName: 'xtream-player',
+      accessibility: KeychainAccessibility.first_unlock
+    ),
     webOptions: WebOptions(
       dbName: 'xtream-player',
       publicKey: 'a6add88c-4a39-11ee-be56-0242ac120002',
