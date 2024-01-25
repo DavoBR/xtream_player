@@ -12,6 +12,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: !kIsWeb ? FloatingActionButton(
+        onPressed: () => context.go('/settings'),
+        child: const Icon(Icons.settings),
+      ) : null,
       body: Consumer(builder: (context, ref, child) {
         return ref.watch(settingsProvider).when(
           loading: () {
