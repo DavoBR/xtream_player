@@ -24,7 +24,8 @@ class HomePage extends StatelessWidget {
             );
           },
           data: (settings) {
-            if (settings.serverUrl.isEmpty && !kIsWeb) {
+            if ((settings.serverUrl.isEmpty || settings.password.isEmpty) &&
+                !kIsWeb) {
               return _MissingSettings();
             } else {
               return _Options();
