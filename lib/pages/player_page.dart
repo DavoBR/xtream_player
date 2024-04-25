@@ -5,7 +5,7 @@ import 'package:xtream_player/widgets/stream_player.dart';
 
 import '../models/enums.dart';
 
-class PlayerPage extends StatelessWidget {
+class PlayerPage extends ConsumerWidget {
   const PlayerPage({
     super.key,
     required this.streamType,
@@ -16,32 +16,27 @@ class PlayerPage extends StatelessWidget {
   final int streamId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final streamInfoAsync = ref.watch(
+      streamInfoProvider(streamId),
+    );
     return Scaffold(
       body: Center(
-        child: Consumer(
-          builder: (context, ref, child) {
-            final streamInfoAsync = ref.watch(
-              streamInfoProvider(streamId),
-            );
-            return streamInfoAsync.when(
-              data: (streamInfo) => StreamPlayer(
-                streamType: streamType,
-                streamId: streamId,
-                streamInfo: streamInfo,
-              ),
-              loading: () => const CircularProgressIndicator(),
-              error: (error, stackTrace) => Column(
-                children: [
-                  Text(error.toString()),
-                  const Divider(),
-                  Text(stackTrace.toString())
-                ],
-              ),
-            );
-          },
+          child: streamInfoAsync.when(
+        data: (streamInfo) => StreamPlayer(
+          streamType: streamType,
+          streamId: streamId,
+          streamInfo: streamInfo,
         ),
-      ),
+        loading: () => const CircularProgressIndicator(),
+        error: (error, stackTrace) => Column(
+          children: [
+            Text(error.toString()),
+            const Divider(),
+            Text(stackTrace.toString())
+          ],
+        ),
+      )),
     );
   }
 }

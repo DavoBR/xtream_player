@@ -11,6 +11,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const BackButton(),
         title: const Text('Configuración'),
       ),
       body: Consumer(builder: (context, ref, child) {

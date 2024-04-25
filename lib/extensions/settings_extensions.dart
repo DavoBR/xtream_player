@@ -17,7 +17,7 @@ extension SettingsExtensions on Settings {
       kIsWeb ? proxyUrl : serverUrl,
       'player_api.php',
       kIsWeb && serverUrl.isNotEmpty ? '?serverUrl=$serverUrl' : '',
-    ].join('/');
+    ].where((s) => s.isNotEmpty).join('/');
   }
 
   String getStreamUrl(StreamType streamType, int streamId, String? extension) {

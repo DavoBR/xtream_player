@@ -1,6 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xtream_player/models/enums.dart';
+import 'package:xtream_player/models/stream_category.dart';
 
-import '../models/enums.dart';
+final streamNameProvider = StateProvider<String>((ref) => '');
 
-final filterProvider =
-    StateProvider.family<String, StreamType>((ref, streamType) => '');
+final streamTypeProvider = StateProvider<StreamType?>((ref) => null);
+
+final streamCategoryProvider =
+    StateProvider.family<StreamCategory?, StreamType>(
+        (ref, streamType) => null);

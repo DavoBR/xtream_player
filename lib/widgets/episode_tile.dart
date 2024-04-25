@@ -17,7 +17,6 @@ class EpisodeTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          isThreeLine: true,
           enableFeedback: true,
           leading: Cover(
             episode.info.coverBig ?? episode.info.movieImage,
@@ -26,7 +25,7 @@ class EpisodeTile extends StatelessWidget {
             fallbackBuilder: (_) => const Placeholder(),
           ),
           title: Text(episode.title),
-          subtitle: Text(episode.info.plot),
+          //subtitle: Text(episode.info.plot),
           onTap: onTap,
         ),
         Consumer(

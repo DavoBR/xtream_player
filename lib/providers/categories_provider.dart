@@ -11,8 +11,12 @@ final _categoryActions = {
 };
 
 final categoriesProvider =
-    FutureProvider.family<List<StreamCategory>, StreamType>(
+    FutureProvider.family<List<StreamCategory>, StreamType?>(
         (ref, streamType) async {
+  if (streamType == null) {
+    return [];
+  }
+
   final playerApi = await ref.watch(playerApiProvider.future);
   final action = _categoryActions[streamType];
 
