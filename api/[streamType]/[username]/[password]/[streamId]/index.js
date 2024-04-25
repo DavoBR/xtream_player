@@ -29,29 +29,3 @@ export default async function handler(request) {
         })
     }
 }
-
-/*export default async function handler(request, response) {
-    const streamUrl = [
-        process.env['SERVER_URL'],
-        request.query['streamType'],
-        process.env['ACCOUNT_USERNAME'],
-        process.env['ACCOUNT_PASSWORD'],
-        request.query['streamId'],
-    ].join('/')
-
-    let fetchResponse
-    let location
-
-    try {
-        fetchResponse = await fetch(streamUrl, { redirect: 'manual' })
-        location = fetchResponse.headers.get('location')
-
-        response.redirect(location)
-    } catch (e) {
-        response.status(500).json({
-            error: e.toString(),
-            status: fetchResponse?.status,
-            location
-        })
-    }
-}*/
