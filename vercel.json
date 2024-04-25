@@ -2,5 +2,13 @@
   "buildCommand": "flutter/bin/flutter build web --release",
   "installCommand": "if cd flutter; then git pull && cd .. ; else git clone https://github.com/flutter/flutter.git; fi && ls && flutter/bin/flutter doctor && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web",
   "outputDirectory": "build/web",
-  "devCommand": "flutter run -d chrome --web-browser-flag \"--disable-web-security\" --web-port=$PORT"
+  "devCommand": "deno run --allow-net --allow-read --allow-env devproxy.js",
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
 }

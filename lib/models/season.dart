@@ -28,7 +28,7 @@ class Season {
     name = json['name'] ?? '';
     overview = json['overview'] ?? '';
     seasonNumber = json['season_number'] ?? 0;
-    voteAverage = double.parse(json['vote_average'].toString());
+    voteAverage = double.tryParse(json['vote_average'].toString()) ?? 0;
     cover = json['cover'] ?? '';
     coverBig = json['cover_big'] ?? '';
   }
