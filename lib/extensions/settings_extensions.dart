@@ -16,7 +16,7 @@ extension SettingsExtensions on Settings {
     return [
       kIsWeb ? proxyUrl : serverUrl,
       'player_api.php',
-      kIsWeb ? '?serverUrl=$serverUrl' : '',
+      kIsWeb && serverUrl.isNotEmpty ? '?serverUrl=$serverUrl' : '',
     ].join('/');
   }
 
@@ -38,10 +38,10 @@ extension SettingsExtensions on Settings {
     return [
       kIsWeb ? proxyUrl : serverUrl,
       streamType.name,
-      username,
-      password,
+      username.isEmpty ? 'default' : username,
+      password.isEmpty ? 'default' : password,
       '$streamId.$extension',
-      kIsWeb ? '?serverUrl=$serverUrl' : '',
-    ].join('/');
+      kIsWeb && serverUrl.isNotEmpty ? '?serverUrl=$serverUrl' : '',
+    ].where((s) => s.isNotEmpty).join('/');
   }
 }
