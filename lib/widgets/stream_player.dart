@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:xtream_player/helpers/stream_helpers.dart';
+import 'package:xtream_player/extensions/settings_extensions.dart';
 import 'package:xtream_player/models/stream_info.dart';
 import 'package:xtream_player/providers/recents_provider.dart';
 import 'package:media_kit/media_kit.dart';
@@ -80,15 +80,12 @@ class _PlayerPageState extends ConsumerState<StreamPlayer> {
 
   void _openMedia() async {
     final settings = await ref.read(settingsProvider.future);
-
-    _player.open(
-      Media(getStreamUrl(
-        widget.streamType,
-        widget.streamId,
-        widget.streamInfo.movieData?.containerExtension,
-        settings,
-      )),
+    final streamUrl = settings.getStreamUrl(
+      widget.streamType,
+      widget.streamId,
+      widget.streamInfo.movieData?.containerExtension,
     );
+    _player.open(Media(streamUrl));
   }
 
   MaterialDesktopVideoControlsThemeData _buildVideoControls() {

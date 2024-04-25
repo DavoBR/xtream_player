@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:xtream_player/extensions/settings_extensions.dart';
 import 'package:xtream_player/providers/settings_provider.dart';
 
 import '../models/enums.dart';
@@ -12,10 +12,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: !kIsWeb ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () => context.go('/settings'),
         child: const Icon(Icons.settings),
-      ) : null,
+      ),
       body: Consumer(builder: (context, ref, child) {
         return ref.watch(settingsProvider).when(
           loading: () {
@@ -24,8 +24,7 @@ class HomePage extends StatelessWidget {
             );
           },
           data: (settings) {
-            if ((settings.serverUrl.isEmpty || settings.password.isEmpty) &&
-                !kIsWeb) {
+            if (settings.isEmpty) {
               return _MissingSettings();
             } else {
               return _Options();

@@ -1,0 +1,10 @@
+# Ignore everything (folders and files) on root only
+/*
+!api
+!vercel.json
+!lib
+!web
+!test
+!analysis_options.yaml
+!pubspect.lock
+!pubspec.yaml

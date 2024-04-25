@@ -5,10 +5,10 @@ export const config = {
 export default async function handler(request) {
     const params = new URL(request.url).searchParams
     const streamUrl = [
-        process.env['SERVER_URL'],
+        params.get('serverUrl'),
         params.get('streamType'),
-        process.env['ACCOUNT_USERNAME'],
-        process.env['ACCOUNT_PASSWORD'],
+        params.get('username'),
+        params.get('password'),
         params.get('streamId'),
     ].join('/')
 
